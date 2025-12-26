@@ -5,9 +5,13 @@ require("dotenv").config();
 
 const apiRoutes = require("./routes/api");
 const tusServer = require("./services/tusService");
+const recoveryService = require("./services/recoveryService");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Start Recovery Service
+recoveryService.start();
 
 // Trust Proxy for Railway/Heroku (handles X-Forwarded-Proto correctly)
 app.set("trust proxy", 1);

@@ -116,6 +116,7 @@ class VideoService {
 
             // Cleanup local files
             await fs.remove(filePath); // remove original upload
+            await fs.remove(`${filePath}.json`); // remove tus metadata file
             await fs.remove(outputDir); // remove segments
 
             // Update status
@@ -127,6 +128,21 @@ class VideoService {
             console.log(
               `[${fileId}] Job completed successfully. URL: ${remoteUrl}`
             );
+            
+            // Notify Backend
+            try {
+              const backendUrl = process.env.BACKEND_URL || 'http://localhost:4000';
+              // Use global fetch (Node 18+)
+              await fetch(`${backendUrl}/api/files/${fileId}/status`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'COMPLETED', url: remoteUrl })
+              });
+              console.log(`[${fileId}] Notified backend.`);
+            } catch (err) {
+              console.error(`[${fileId}] Failed to notify backend:`, err);
+            }
+
             resolve(remoteUrl);
           } catch (uploadErr) {
             console.error(`[${fileId}] Upload error:`, uploadErr);

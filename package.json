@@ -8,7 +8,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/app.js"
   },
   "dependencies": {
     "@tus/file-store": "^2.0.0",
@@ -22,5 +23,8 @@
     "multer": "^2.0.2",
     "p-limit": "^7.2.0",
     "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
