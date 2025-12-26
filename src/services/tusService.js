@@ -12,6 +12,8 @@ const tusServer = new Server({
   datastore: new FileStore({
     directory: uploadDir,
   }),
+  // Force relative location headers to avoid protocol mismatch behind proxies (http vs https)
+  relativeLocation: true,
 });
 
 /**
