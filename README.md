@@ -52,7 +52,7 @@ MINIO_BUCKET=test-bucket
 FFMPEG_CONCURRENCY_LIMIT=2
 ```
 
-## 啟動服務
+## 啟動服務 (本機開發)
 
 ### 1. 啟動 MinIO (本地物件儲存)
 
@@ -79,6 +79,40 @@ npm start
 ```
 
 伺服器將在 `http://localhost:3000` 啟動。
+
+## 使用 Docker 啟動 (Backend + MinIO)
+
+專案已提供 `Dockerfile` 與 `docker-compose.yml`，可一次啟動 Backend 服務與 MinIO。
+
+### 1. 準備 .env
+
+確認 `backend/.env` 至少包含：
+
+```env
+PORT=3000
+
+MINIO_ENDPOINT=minio
+MINIO_PORT=9000
+MINIO_USE_SSL=false
+MINIO_ACCESS_KEY=minioadmin
+MINIO_SECRET_KEY=minioadmin
+MINIO_BUCKET=test-bucket
+```
+
+### 2. 使用 docker-compose 啟動
+
+在 `backend/` 目錄下執行：
+
+```bash
+cd backend
+docker-compose up --build
+```
+
+- Backend: http://localhost:3000
+- MinIO API: http://localhost:9000
+- MinIO Console: http://localhost:9001
+
+影片上傳流程與本機開發模式相同，只是 ffmpeg 與 MinIO 現在都跑在容器裡。
 
 ## API 端點
 

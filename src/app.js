@@ -13,13 +13,31 @@ const PORT = process.env.PORT || 3000;
 app.set("trust proxy", 1);
 
 // Middleware
-app.use(cors({
+app.use(
+  cors({
     origin: true, // Allow all origins (or specify your frontend URL)
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Tus-Resumable', 'Upload-Length', 'Upload-Metadata', 'Upload-Offset', 'Location'],
-    exposedHeaders: ['Tus-Resumable', 'Upload-Length', 'Upload-Metadata', 'Upload-Offset', 'Location', 'Tus-Version', 'Tus-Extension'],
+    methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS", "HEAD"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Tus-Resumable",
+      "Upload-Length",
+      "Upload-Metadata",
+      "Upload-Offset",
+      "Location",
+    ],
+    exposedHeaders: [
+      "Tus-Resumable",
+      "Upload-Length",
+      "Upload-Metadata",
+      "Upload-Offset",
+      "Location",
+      "Tus-Version",
+      "Tus-Extension",
+    ],
     credentials: true,
-}));
+  })
+);
 
 // Mount Tus Server BEFORE body parsers to avoid conflicts
 // Tus server handles its own stream processing
